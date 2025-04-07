@@ -15,74 +15,74 @@
 | 기타 | Metamask, EC2, S3 |
 
 ## 프로젝트 구조
-d-vote/
-├── contracts/             # 스마트 계약 개발
-│   ├── contracts/
-│   │   └── Vote.sol       # 기본 투표 스마트 계약
-│   ├── scripts/
-│   │   └── deploy.js      # 배포 스크립트
-│   ├── test/
-│   │   └── vote.test.js   # 테스트 코드
-│   ├── hardhat.config.js  # 하드햇 설정 파일
-│   └── package.json       # npm 설정 파일
-│
-├── backend/               # 백엔드 서버 (Spring Boot - Maven)
-│   ├── src/
-│   │   └── main/java/...  # Java 코드
-│   ├── pom.xml            # Maven 설정 파일
-│   └── README.md
-│
-├── frontend/              # 프론트엔드 (React + Vite)
-│   ├── public/
-│   ├── src/
-│   │   ├── components/    # 공통 컴포넌트
-│   │   ├── pages/         # 페이지 구성
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── index.html
-│   ├── package.json
-│   └── vite.config.js
-│
-├── infra/                 # Geth 로컬 노드, docker-compose 등
-│   ├── docker-compose.yml
-│   ├── geth/
-│   │   └── init.sh
-│   └── README.md
-│
-├── docs/                  # 기술 문서, API 명세, 기획서
-│   └── architecture.md
-│
-├── .gitignore
-├── README.md
-└── LICENSE
+    d-vote/
+    ├── contracts/             # 스마트 계약 개발
+    │   ├── contracts/
+    │   │   └── Vote.sol       # 기본 투표 스마트 계약
+    │   ├── scripts/
+    │   │   └── deploy.js      # 배포 스크립트
+    │   ├── test/
+    │   │   └── vote.test.js   # 테스트 코드
+    │   ├── hardhat.config.js  # 하드햇 설정 파일
+    │   └── package.json       # npm 설정 파일
+    │
+    ├── backend/               # 백엔드 서버 (Spring Boot - Maven)
+    │   ├── src/
+    │   │   └── main/java/...  # Java 코드
+    │   ├── pom.xml            # Maven 설정 파일
+    │   └── README.md
+    │
+    ├── frontend/              # 프론트엔드 (React + Vite)
+    │   ├── public/
+    │   ├── src/
+    │   │   ├── components/    # 공통 컴포넌트
+    │   │   ├── pages/         # 페이지 구성
+    │   │   ├── App.jsx
+    │   │   └── main.jsx
+    │   ├── index.html
+    │   ├── package.json
+    │   └── vite.config.js
+    │
+    ├── infra/                 # Geth 로컬 노드, docker-compose 등
+    │   ├── docker-compose.yml
+    │   ├── geth/
+    │   │   └── init.sh
+    │   └── README.md
+    │
+    ├── docs/                  # 기술 문서, API 명세, 기획서
+    │   └── architecture.md
+    │
+    ├── .gitignore
+    ├── README.md
+    └── LICENSE
 
 ## 실행 방법
 
 ### 1. 스마트 계약
-```bash
-cd contracts
-npm install
-npx hardhat compile
-npx hardhat test
+    ```bash
+    cd contracts
+    npm install
+    npx hardhat compile
+    npx hardhat test
 
 ### 2. 프론트엔드
-cd frontend
-npm install
-npm run dev
+    cd frontend
+    npm install
+    npm run dev
 
 ### 3. 백엔드
-cd backend
-./mvnw spring-boot:run
+    cd backend
+    ./mvnw spring-boot:run
 
 ### 4. 로컬 Geth 노드 실행
-cd infra/geth
-./init.sh
+    cd infra/geth
+    ./init.sh
 
 ## 배포 환경
-  EC2 (Ubuntu 22.04)
-  Geth 노드: 로컬 테스트넷 or Goerli
-  프론트:S3 + CloudFront
-  백엔드:EC2 + Nginx + Spring Boot
+    EC2 (Ubuntu 22.04)
+    Geth 노드: 로컬 테스트넷 or Goerli
+    프론트:S3 + CloudFront
+    백엔드:EC2 + Nginx + Spring Boot
 
 ## 기여 방법
-이 프로젝트는 학습 및 포트폴리오 목적이며, PR 및 피드백 환영합니다!
+    이 프로젝트는 학습 및 포트폴리오 목적이며, PR 및 피드백 환영합니다!
