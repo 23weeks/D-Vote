@@ -1,5 +1,6 @@
 package com.dvote.backend.service;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,14 +16,17 @@ import com.dvote.backend.entity.Candidate;
 import com.dvote.backend.entity.Vote;
 import com.dvote.backend.entity.Voter;
 import com.dvote.backend.repository.VoteRepository;
+import com.dvote.backend.repository.VoterRepository;
 
 @Service
 public class VoteService {
 	
 	private final VoteRepository voteRepository;
+	private final VoterRepository voterRepository;
 	
-	public VoteService(VoteRepository voteRepository) {
+	public VoteService(VoteRepository voteRepository, VoterRepository voterRepository) {
 		this.voteRepository = voteRepository;
+		this.voterRepository = voterRepository;
 	}
 	
 	public Vote findById(Long id) {
@@ -36,7 +40,7 @@ public class VoteService {
 		Vote vote = new Vote(
 				request.getTitle(),
 				request.getDescription(),
-				request.getStartTime(),
+				LocalDateTime.now(),
 				request.getEndTime(),
 				true,
 				request.getVoterCountTarget()
@@ -55,7 +59,8 @@ public class VoteService {
 				vote.getTitle(),
 				vote.getDescription(),
 				vote.getStartTime(),
-				vote.getEndTime()
+				vote.getEndTime(),
+				vote.isActive()
 		);
 	}
 	
@@ -91,5 +96,60 @@ public class VoteService {
 					return new VoteResultResponse(c.getName(), totalVoteCount, voterRate, turnoutRate);
 				})
 				.collect(Collectors.toList());
+	}
+	
+	//투표 종료
+	@Transactional
+	public void closeVote(Long voteId) {
+		
+		Voter voter = voterRepository.findById(voteId)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid voter ID"));
+		
+		//권한 체크
+		checkAdminPermission(voter);
+		
+		Vote vote = voteRepository.findById(voteId)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid vote ID"));
+		
+		if(!vote.isActive()) {
+			throw new IllegalStateException("Vote is already closed");
+		}
+		
+		vote.setActive(false);
+		vote.setEndTime(LocalDateTime.now());
+		voteRepository.save(vote);
+	}
+	
+	//진행중인 투표 조회
+	public List<VoteResponse> getActiveVotes() {
+		List<Vote> activeVotes = voteRepository.findByIsActiveTrue();
+		
+		return activeVotes.stream()
+				.map(vote -> new VoteResponse(
+						vote.getId(),
+						vote.getTitle(),
+						vote.getDescription(),
+						vote.getStartTime(),
+						vote.getEndTime(),
+						vote.isActive()
+				))
+				.collect(Collectors.toList());
+	}
+	
+	//투표 자동종료 처리 메서드 추가
+	@Transactional
+	public void closeExpiredVotes() {
+		List<Vote> expiredVotes = voteRepository.findByEndTimeBeforeAndIsActiveTrue(LocalDateTime.now());
+		
+		for(Vote vote : expiredVotes) {
+			vote.setActive(false);
+		}
+		
+		voteRepository.saveAll(expiredVotes);
+	}
+	
+	//권한 체크
+	private void checkAdminPermission(Voter voter) {
+		if(!voter.isAdmin()) throw new RuntimeException("관리자만 접근 가능합니다.");
 	}
 }

@@ -18,6 +18,8 @@ public class Voter {
 	
 	private String voterName;
 	
+	private boolean isAdmin;
+	
 	@ManyToOne
 	@JoinColumn(name = "vote_id")
 	private Vote vote;
@@ -30,10 +32,11 @@ public class Voter {
 		
 	}
 	
-	public Voter(String voterName, Vote vote, Candidate candidate) {
+	public Voter(String voterName, Vote vote, Candidate candidate, boolean isAdmin) {
 		this.voterName = voterName;
 		this.vote = vote;
 		this.candidate = candidate;
+		this.isAdmin = isAdmin;
 	}
 
 	public Long getId() {
@@ -66,5 +69,13 @@ public class Voter {
 
 	public void setVote(Vote vote) {
 		this.vote = vote;
+	}
+	
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 }

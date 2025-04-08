@@ -5,6 +5,7 @@ public class VoterRequest {
 	private String voterName;
 	private Long voteId;
 	private Long candidateId;
+	private boolean isAdmin;
 	
 	protected VoterRequest() {
 		
@@ -38,5 +39,9 @@ public class VoterRequest {
 
 	public void setCandidateId(Long candidateId) {
 		this.candidateId = candidateId;
+	}
+	
+	public boolean isAdmin() {
+		return isAdmin;
 	}
 }

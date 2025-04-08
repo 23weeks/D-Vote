@@ -21,12 +21,13 @@ public class VoteResponse {
 		this.isActive = vote.isActive();
 	}
 	
-	public VoteResponse(Long id, String title, String description, LocalDateTime startTime, LocalDateTime endTime) {
+	public VoteResponse(Long id, String title, String description, LocalDateTime startTime, LocalDateTime endTime, boolean isActive) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.startTime = startTime;
 		this.endTime = endTime;
+		this.isActive = isActive;
 	}
 
 	public Long getId() {

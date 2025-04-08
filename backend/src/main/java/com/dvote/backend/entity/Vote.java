@@ -1,7 +1,6 @@
 package com.dvote.backend.entity;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -86,7 +85,7 @@ public class Vote {
 		return endTime;
 	}
 
-	public void setEndDate(LocalDateTime endTime) {
+	public void setEndTime(LocalDateTime endTime) {
 		this.endTime = endTime;
 	}
 

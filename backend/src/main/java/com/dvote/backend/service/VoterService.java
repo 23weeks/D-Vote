@@ -34,6 +34,7 @@ public class VoterService {
 		Long voteId = request.getVoteId();
 		String voterName = request.getVoterName();
 		Long candidateId = request.getCandidateId();
+		Boolean isAdmin = request.isAdmin();
 				
 		//중복 투표 검사
 		if(voterRepository.existsByVoterIdAndVoteId(voteId, voterName)) {
@@ -51,7 +52,7 @@ public class VoterService {
 		Candidate candidate = candidateRepository.findById(candidateId)
 				.orElseThrow(() -> new IllegalArgumentException("유효하지 않은 후보자 ID입니다."));
 		
-		Voter voter = new Voter(voterName, vote, candidate);
+		Voter voter = new Voter(voterName, vote, candidate, isAdmin);
 		return new VoterResponse(voterRepository.save(voter));
 	}
 }
