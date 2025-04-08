@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dvote.backend.dto.VoteResultResponse;
 import com.dvote.backend.dto.VoteRequest;
 import com.dvote.backend.dto.VoteResponse;
 import com.dvote.backend.entity.Vote;
@@ -26,25 +27,6 @@ public class VoteController {
 		this.voteService = voteService;
 	}
 
-	//해당 투표 정보 조회
-	@GetMapping("/{voteId}")
-	public ResponseEntity<VoteResponse> getVote(@PathVariable Long voteId) {
-		VoteResponse voteResponse = voteService.getVote(voteId);
-		return ResponseEntity.ok(voteResponse);
-	}
-	
-	//투표 목록 조회
-	@GetMapping
-	public List<Vote> getAllVotes() {
-		return voteService.getAllVotes();
-	}
-	
-	//활성화된 투표 목록 조회
-	@GetMapping("/active")
-	public List<Vote> getActiveVotes() {
-		return voteService.getActiveVotes();
-	}
-	
 	//투표 등록
 	@PostMapping
 	public ResponseEntity<VoteResponse> createVote(@RequestBody VoteRequest request) {
@@ -61,9 +43,20 @@ public class VoteController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 	
-	//투표 종료
-	@PostMapping("/{id}/close")
-	public void closeVote(@PathVariable Long id) {
-		voteService.closeVote(id);
+	//해당 투표 정보 조회
+	@GetMapping("/{voteId}")
+	public ResponseEntity<VoteResponse> getVote(@PathVariable Long voteId) {
+		return ResponseEntity.ok(voteService.getVote(voteId));
+	}
+	
+	//투표 목록 조회
+	@GetMapping
+	public ResponseEntity<List<VoteResponse>> getAllVotes() {
+		return ResponseEntity.ok(voteService.getAllVotes());
+	}
+	
+	@GetMapping("/{voteId}/results")
+	public ResponseEntity<List<VoteResultResponse>> getResults(@PathVariable Long voteId) {
+		return ResponseEntity.ok(voteService.getVoteResults(voteId));
 	}
 }

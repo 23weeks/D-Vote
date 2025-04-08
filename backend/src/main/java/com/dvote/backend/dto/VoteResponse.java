@@ -2,18 +2,29 @@ package com.dvote.backend.dto;
 
 import java.time.LocalDateTime;
 
+import com.dvote.backend.entity.Vote;
+
 public class VoteResponse {
 	
 	private Long id;
 	private String title;
-	private String descripiton;
+	private String description;
 	private LocalDateTime startTime;
 	private LocalDateTime endTime;
+	private boolean isActive;
+
+	public VoteResponse(Vote vote) {
+		this.id = vote.getId();
+		this.title = vote.getTitle();
+		this.startTime = vote.getStartTime();
+		this.endTime = vote.getEndTime();
+		this.isActive = vote.isActive();
+	}
 	
-	public VoteResponse(Long id, String title, String descripiton, LocalDateTime startTime, LocalDateTime endTime) {
+	public VoteResponse(Long id, String title, String description, LocalDateTime startTime, LocalDateTime endTime) {
 		this.id = id;
 		this.title = title;
-		this.descripiton = descripiton;
+		this.description = description;
 		this.startTime = startTime;
 		this.endTime = endTime;
 	}
@@ -26,8 +37,8 @@ public class VoteResponse {
 		return title;
 	}
 
-	public String getDescripiton() {
-		return descripiton;
+	public String getDescription() {
+		return description;
 	}
 
 	public LocalDateTime getStartTime() {
@@ -36,5 +47,9 @@ public class VoteResponse {
 
 	public LocalDateTime getEndTime() {
 		return endTime;
+	}
+	
+	public boolean isActive() {
+		return isActive;
 	}
 }

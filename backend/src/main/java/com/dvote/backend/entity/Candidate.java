@@ -1,11 +1,16 @@
 package com.dvote.backend.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,6 +28,9 @@ public class Candidate {
 	@ManyToOne
 	@JoinColumn(name = "vote_id")
 	private Vote vote;
+	
+	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
+	private List<Voter> voters = new ArrayList<Voter>();
 	
 	protected Candidate() {
 		
@@ -64,5 +72,13 @@ public class Candidate {
 
 	public void setVote(Vote vote) {
 		this.vote = vote;
+	}
+
+	public List<Voter> getVoters() {
+		return voters;
+	}
+
+	public void setVoters(List<Voter> voters) {
+		this.voters = voters;
 	}
 }

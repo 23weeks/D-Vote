@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dvote.backend.dto.CandidateRequest;
 import com.dvote.backend.dto.CandidateResponse;
 import com.dvote.backend.entity.Candidate;
 import com.dvote.backend.entity.Vote;
@@ -23,6 +24,24 @@ public class CandidateService {
 		this.voteRepository = voteRepository;
 	}
 	
+	public Candidate findById(Long id) {
+		return candidateRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid candidate ID"));
+	}
+	
+	//후보자 생성
+	@Transactional
+	public CandidateResponse createCandidate(Long voteId, CandidateRequest request) {
+		Vote vote = voteRepository.findById(voteId)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid vote Id"));
+		
+		Candidate candidate = new Candidate(request.getName(), request.getDescription(), vote);
+		Candidate saved = candidateRepository.save(candidate);
+		
+		return new CandidateResponse(saved);
+	}
+	
+	//후보자 목록
 	public List<CandidateResponse> getCandidatesByVoteId(Long voteId) {
 		Vote vote = voteRepository.findById(voteId)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid vote ID"));
@@ -30,20 +49,7 @@ public class CandidateService {
 		List<Candidate> candidates = candidateRepository.findByVote(vote);
 		
 		return candidates.stream()
-				.map(candidate -> new CandidateResponse(
-						candidate.getId(),
-						candidate.getName(),
-						candidate.getDescription()
-						))
+				.map(CandidateResponse::new)
 				.collect(Collectors.toList());
-	}
-	
-	@Transactional
-	public Candidate createCandidate(Long voteId, String name, String description) {
-		Vote vote = voteRepository.findById(voteId)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid vote Id"));
-		
-		Candidate candidate = new Candidate(name, description, vote);
-		return candidateRepository.save(candidate);
 	}
 }

@@ -1,5 +1,7 @@
 package com.dvote.backend.controller;
 
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -7,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dvote.backend.dto.VoterRequest;
-import com.dvote.backend.entity.Voter;
+import com.dvote.backend.dto.VoterResponse;
 import com.dvote.backend.service.VoterService;
 
 @RestController
@@ -21,10 +23,16 @@ public class VoterController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Voter> vote(@RequestBody VoterRequest request) {
+	public ResponseEntity<?> vote(@RequestBody VoterRequest request) {
 		
-		Voter voter = voterService.registerVote(request);
-		
-		return ResponseEntity.ok(voter);
+		try {
+			VoterResponse result = voterService.registerVote(request);
+			
+			return ResponseEntity.ok(result);
+			
+		} catch (IllegalStateException | IllegalArgumentException e) {
+			
+			return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+		}
 	}
 }

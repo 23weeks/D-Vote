@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dvote.backend.dto.CandidateRequest;
 import com.dvote.backend.dto.CandidateResponse;
-import com.dvote.backend.entity.Candidate;
 import com.dvote.backend.service.CandidateService;
 
 @RestController
@@ -24,21 +24,18 @@ public class CandidateController {
 		this.candidateService = candidateService;
 	}
 	
+	//후보자 등록
+	@PostMapping("/{voteId}")
+	public ResponseEntity<CandidateResponse> createCandidate(@PathVariable Long voteId, @RequestBody CandidateRequest request) {
+		
+		return ResponseEntity.ok(candidateService.createCandidate(voteId, request));
+	}
+	
 	//투표별 후보자 목록
 	@GetMapping("/{voteId}/list")
 	public ResponseEntity<List<CandidateResponse>> getCandidatesByVoteId(@PathVariable Long voteId) {
 		
-		List<CandidateResponse> candidates = candidateService.getCandidatesByVoteId(voteId);
-		
-		return ResponseEntity.ok(candidates);
+		return ResponseEntity.ok(candidateService.getCandidatesByVoteId(voteId));
 	}
 	
-	//후보자 등록
-	@PostMapping("/{voteId}")
-	public ResponseEntity<Candidate> createCandidate(@PathVariable Long voteId, @RequestBody Candidate Request) {
-		
-		Candidate created = candidateService.createCandidate(voteId, Request.getName(), Request.getDescription());
-		
-		return ResponseEntity.ok(created);
-	}
 }

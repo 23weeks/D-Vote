@@ -8,6 +8,11 @@ public class VoteRequest {
 	private String description;
 	private LocalDateTime startTime;
 	private LocalDateTime endTime;
+	private boolean isActive;
+	private int voterCountTarget;
+	
+	private Long candidateId;
+	private String VoterName;
 	
 	public String getTitle() {
 		return title;
@@ -20,5 +25,17 @@ public class VoteRequest {
 	}
 	public LocalDateTime getEndTime() {
 		return endTime;
+	}
+	public Long getCandidateId() {
+		return candidateId;
+	}
+	public String getVoterName() {
+		return VoterName;
+	}
+	public boolean isActive() {
+		return isActive;
+	}
+	public int getVoterCountTarget() {
+		return voterCountTarget;
 	}
 }
