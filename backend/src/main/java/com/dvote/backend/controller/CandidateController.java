@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dvote.backend.dto.CandidateRequest;
-import com.dvote.backend.dto.CandidateResponse;
+import com.dvote.backend.dto.request.CandidateRequest;
+import com.dvote.backend.dto.response.CandidateResponse;
 import com.dvote.backend.service.CandidateService;
 
 @RestController
@@ -29,14 +29,12 @@ public class CandidateController {
 	@PostMapping("/{voteId}")
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<CandidateResponse> createCandidate(@PathVariable Long voteId, @RequestBody CandidateRequest request) {
-		
 		return ResponseEntity.ok(candidateService.createCandidate(voteId, request));
 	}
 	
 	//투표별 후보자 목록
 	@GetMapping("/{voteId}/list")
 	public ResponseEntity<List<CandidateResponse>> getCandidatesByVoteId(@PathVariable Long voteId) {
-		
 		return ResponseEntity.ok(candidateService.getCandidatesByVoteId(voteId));
 	}
 	

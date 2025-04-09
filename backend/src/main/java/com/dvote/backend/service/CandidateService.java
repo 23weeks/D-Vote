@@ -6,8 +6,9 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dvote.backend.dto.CandidateRequest;
-import com.dvote.backend.dto.CandidateResponse;
+import com.dvote.backend.Exception.CustomException;
+import com.dvote.backend.dto.request.CandidateRequest;
+import com.dvote.backend.dto.response.CandidateResponse;
 import com.dvote.backend.entity.Candidate;
 import com.dvote.backend.entity.Vote;
 import com.dvote.backend.repository.CandidateRepository;
@@ -32,8 +33,12 @@ public class CandidateService {
 	//후보자 생성
 	@Transactional
 	public CandidateResponse createCandidate(Long voteId, CandidateRequest request) {
+		if(candidateRepository.existsByNameAndVote_Id(request.getName(), request.getVoteId())) {
+			throw new CustomException("해당 투표에 이미 등록된 후보입니다.", 401);
+		}
+		
 		Vote vote = voteRepository.findById(voteId)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid vote Id"));
+				.orElseThrow(() -> new CustomException("투표 정보를 찾을 수 없습니다.", 404));
 		
 		Candidate candidate = new Candidate(request.getName(), request.getDescription(), vote);
 		Candidate saved = candidateRepository.save(candidate);
@@ -43,11 +48,7 @@ public class CandidateService {
 	
 	//후보자 목록
 	public List<CandidateResponse> getCandidatesByVoteId(Long voteId) {
-		Vote vote = voteRepository.findById(voteId)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid vote ID"));
-		
-		List<Candidate> candidates = candidateRepository.findByVote(vote);
-		
+		List<Candidate> candidates = candidateRepository.findByVoteId(voteId);
 		return candidates.stream()
 				.map(CandidateResponse::new)
 				.collect(Collectors.toList());

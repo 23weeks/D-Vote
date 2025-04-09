@@ -1,4 +1,4 @@
-package com.dvote.backend.dto;
+package com.dvote.backend.dto.request;
 
 public class VoterRequest {
 

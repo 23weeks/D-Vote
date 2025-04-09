@@ -1,4 +1,4 @@
-package com.dvote.backend.dto;
+package com.dvote.backend.dto.request;
 
 import java.time.LocalDateTime;
 
