@@ -37,7 +37,7 @@ public class VoterService {
 		Boolean isAdmin = request.isAdmin();
 				
 		//중복 투표 검사
-		if(voterRepository.existsByVoterIdAndVoteId(voteId, voterName)) {
+		if(voterRepository.existsByVoterNameAndVoteId(voterName, voteId)) {
 			throw new IllegalStateException("이미 해당 투표에 참여했습니다.");
 		}
 		

@@ -29,11 +29,6 @@ public class VoteService {
 		this.voterRepository = voterRepository;
 	}
 	
-	public Vote findById(Long id) {
-		return voteRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid vote ID"));
-	}
-	
 	//투표 생성
 	@Transactional
 	public Vote createVote(VoteRequest request) {

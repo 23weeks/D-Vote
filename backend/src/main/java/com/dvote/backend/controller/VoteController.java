@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,7 @@ public class VoteController {
 
 	//투표 등록
 	@PostMapping
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<VoteResponse> createVote(@RequestBody VoteRequest request) {
 		
 		Vote vote = voteService.createVote(request);
@@ -65,12 +67,12 @@ public class VoteController {
 	
 	//진행중인 투표 조회
 	public ResponseEntity<List<VoteResponse>> getActiveVotes() {
-		
 		return ResponseEntity.ok(voteService.getActiveVotes());
 	}
 	
 	//투표 종료
 	@PutMapping("/{voteId}/close")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<String> closeVote(@PathVariable Long voteId) {
 		voteService.closeVote(voteId);
 		return ResponseEntity.ok("Vote closed succesfully.");
