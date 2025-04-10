@@ -9,7 +9,7 @@
 |--------|------|
 | 스마트 계약 | Solidity, Hardhat |
 | 프론트엔드 | React, Vite, Ethers.js |
-| 백엔드 | Spring Boot (Maven), Web3j |
+| 백엔드 | Spring Boot (Maven), Spring Sequrity + JWT, JPA + MySQL |
 | 블록체인 노드 | Geth (Ethereum) |
 | 인프라 | Docker, GitHub Actions (CI/CD) |
 | 기타 | Metamask, EC2, S3 |
@@ -59,7 +59,6 @@
 ## 실행 방법
 
 ### 1. 스마트 계약
-    ```bash
     cd contracts
     npm install
     npx hardhat compile
