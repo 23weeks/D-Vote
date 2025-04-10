@@ -9,11 +9,41 @@
 |--------|------|
 | 스마트 계약 | Solidity, Hardhat |
 | 프론트엔드 | React, Vite, Ethers.js |
-| 백엔드 | Spring Boot (Maven), Spring Sequrity + JWT, JPA + MySQL |
+| 백엔드 | Spring Boot (Maven) |
 | 블록체인 노드 | Geth (Ethereum) |
 | 인프라 | Docker, GitHub Actions (CI/CD) |
 | 기타 | Metamask, EC2, S3 |
+| 보안 | Spring Security, JWT, PasswordEncoder (BCrypt) |
+| 인증 처리 | @AuthenticationPrincipal + CustomUserDetails |
+| 예외 처리 | @RestControllerAdvice + GlobalExceptionHandler |
+| 스케줄링 | @Scheduled 기반 투표 마감 처리 |
+| 데이터 | Spring Data JPA, MySQL |
 
+## 주요 기능
+
+### 회원 관리
+    - 회원가입 / 로그인 (JWT 발급)
+    - 관리자 / 일반 사용자 권한 구분
+    - 로그인 유저 정보 추출 및 인증
+    
+### 투표 기능
+    - 투표 생성 (관리자 전용)
+    - 후보 등록 (관리자 전용)
+    - 투표 마감 스케줄링 (Scheduler 기반)
+    - 투표 참여 (중복 투표 방지)
+    - 투표 결과 확인 (득표율 + 당선자)
+    
+### 조회 기능
+    - 전체 투표 목록
+    - 특정 투표의 후보 목록
+    - 유저별 투표 참여 기록
+    - 특정 투표 참여 여부 확인
+
+### 관리자 전용 통계
+    - 전체 유저 수
+    - 전체 투표 수
+    - 투표별 참여 수 및 투표율
+    
 ## 프로젝트 구조
     d-vote/
     ├── contracts/             # 스마트 계약 개발
