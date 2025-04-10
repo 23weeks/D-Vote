@@ -29,8 +29,7 @@
     ├── backend/               # 백엔드 서버 (Spring Boot - Maven)
     │   ├── src/
     │   │   └── main/java/...  # Java 코드
-    │   ├── pom.xml            # Maven 설정 파일
-    │   └── README.md
+    │   └── pom.xml            # Maven 설정 파일
     │
     ├── frontend/              # 프론트엔드 (React + Vite)
     │   ├── public/
