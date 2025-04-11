@@ -44,8 +44,7 @@ public class VoteService {
 				request.getDescription(),
 				LocalDateTime.now(),
 				request.getEndTime(),
-				true,
-				request.getVoterCountTarget()
+				true
 		);
 		
 		return voteRepository.save(vote);

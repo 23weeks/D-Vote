@@ -38,4 +38,28 @@ public class VoteRequest {
 	public int getVoterCountTarget() {
 		return voterCountTarget;
 	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public void setStartTime(LocalDateTime startTime) {
+		this.startTime = startTime;
+	}
+	public void setEndTime(LocalDateTime endTime) {
+		this.endTime = endTime;
+	}
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+	public void setVoterCountTarget(int voterCountTarget) {
+		this.voterCountTarget = voterCountTarget;
+	}
+	public void setCandidateId(Long candidateId) {
+		this.candidateId = candidateId;
+	}
+	public void setVoterName(String voterName) {
+		VoterName = voterName;
+	}
 }

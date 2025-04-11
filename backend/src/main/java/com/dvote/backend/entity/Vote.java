@@ -31,8 +31,6 @@ public class Vote {
 	@Column(nullable = false)
 	private boolean isActive;
 	
-	private int voterCountTarget; //전체 유권자 수
-	
 	@OneToMany(mappedBy = "vote", cascade = CascadeType.ALL)
 	private List<Candidate> candidates;
 	
@@ -40,13 +38,12 @@ public class Vote {
 		
 	}
 	
-	public Vote(String title, String description, LocalDateTime startTime, LocalDateTime endTime, boolean isActive, int voterCountTarget) {
+	public Vote(String title, String description, LocalDateTime startTime, LocalDateTime endTime, boolean isActive) {
 		this.title = title;
 		this.description = description;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.isActive = isActive;
-		this.voterCountTarget = voterCountTarget;
 	}
 
 	public Long getId() {
@@ -105,7 +102,4 @@ public class Vote {
 		this.candidates = candidates;
 	}
 
-	public int getVoterCountTarget() {
-		return voterCountTarget;
-	}
 }
