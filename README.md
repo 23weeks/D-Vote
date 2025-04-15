@@ -53,6 +53,7 @@
     │   │   └── deploy.js      # 배포 스크립트
     │   ├── test/
     │   │   └── vote.test.js   # 테스트 코드
+    |   ├── extract-abi-bin.js # web3j 설정 파일
     │   ├── hardhat.config.js  # 하드햇 설정 파일
     │   └── package.json       # npm 설정 파일
     │
