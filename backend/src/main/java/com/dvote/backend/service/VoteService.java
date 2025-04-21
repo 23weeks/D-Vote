@@ -23,17 +23,22 @@ import com.dvote.backend.repository.UserRepository;
 import com.dvote.backend.repository.VoteRepository;
 import com.dvote.backend.repository.VoterRepository;
 
+import contract.ContractVoteService;
+
 @Service
 public class VoteService {
+	
 	
 	private final VoteRepository voteRepository;
 	private final VoterRepository voterRepository;
 	private final UserRepository userRepository;
+	private final ContractVoteService contractVoteService;
 	
-	public VoteService(VoteRepository voteRepository, VoterRepository voterRepository, UserRepository userRepository) {
+	public VoteService(VoteRepository voteRepository, VoterRepository voterRepository, UserRepository userRepository, ContractVoteService contractVoteService) {
 		this.voteRepository = voteRepository;
 		this.voterRepository = voterRepository;
 		this.userRepository = userRepository;
+		this.contractVoteService = contractVoteService;
 	}
 	
 	//투표 생성
