@@ -21,6 +21,9 @@ public class Voter {
 	private boolean isAdmin;
 	
 	@ManyToOne
+	private User user;
+	
+	@ManyToOne
 	@JoinColumn(name = "vote_id")
 	private Vote vote;
 
